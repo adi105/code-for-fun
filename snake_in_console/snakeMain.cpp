@@ -1,5 +1,6 @@
 #include <iostream>
 #include <conio.h>
+#include <iomanip>
 #include <Windows.h>
 using namespace std;
 
@@ -31,12 +32,12 @@ direction dir;
 
 int main() {
 	setup();
-	
+
 	while (!gameOver) {
 		draw();
 		input();
 		logic();
-		Sleep(100);
+		Sleep(50);
 	}
 
 
@@ -57,43 +58,43 @@ void setup() {
 
 void draw() {
 	system("cls"); //this clears the console
-	
-	for (int top = 0; top < WIDTH+2; top++) {
-		cout << "#";
+
+	for (int top = 0; top < WIDTH + 2; top++) {
+		cout << setw(2) << "#";
 	}
 	cout << endl;
 
 	for (int yCoord = 0; yCoord < HEIGHT; yCoord++) {
 		for (int xCoord = 0; xCoord < WIDTH; xCoord++) {
 			if (xCoord == 0)
-				cout << "#";
+				cout << setw(2) << "#";
 			//prints the snake's position
 			if (yCoord == y && xCoord == x)
-				cout << "O";
+				cout << setw(2) << "O";
 			//prints the fruit
 			else if (yCoord == fruitY && xCoord == fruitX)
-				cout << "F";
+				cout << setw(2) << "F";
 			else {
 				bool print = false;
 				for (int t = 0; t < tailLength; t++) {
 					if (tailX[t] == xCoord && tailY[t] == yCoord) {
-						cout << "o";
+						cout << setw(2) << "o";
 						print = true;
 					}
 				}
 				if (!print) {
-					cout << " ";
+					cout << setw(2) << " ";
 				}
 			}
-			
+
 			if (xCoord == WIDTH - 1)
-				cout << "#";
+				cout << setw(2) << "#";
 		}
 		cout << endl;
 	}
 
-	for (int bot = 0; bot < WIDTH+2; bot++) {
-		cout << "#";
+	for (int bot = 0; bot < WIDTH + 2; bot++) {
+		cout << setw(2) << "#";
 	}
 	cout << endl;
 	cout << "Score:" << score << endl;
@@ -137,9 +138,9 @@ void logic() {
 		prevX = prev2X;
 		prevY = prev2Y;
 	}
-	
+
 	switch (dir) {
-	
+
 	case LEFT:
 		x--;
 		break;
@@ -155,7 +156,7 @@ void logic() {
 	default:
 		break;
 	}
-	if (x > WIDTH || x <= 0 || y > HEIGHT || y < 0) {
+	if (x > WIDTH || x < 0 || y > HEIGHT || y < 0) {
 		gameOver = true;
 	}
 	for (int i = 0; i < tailLength; i++) {
